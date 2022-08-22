@@ -37,16 +37,7 @@
         Movies
       </a>
     </li>
-    <li class="nav-item">
-      <a href="{{ route('admin.movies.index') }}"
-        class="nav-link {{ Request::route()->getName() === 'admin.movies.index' ? 'active' : '' }}"
-        aria-current="page">
-        <svg class="bi pe-none me-2 text-light" width="16" height="16">
-          <use xlink:href="/bootstrap-icons.svg#patch-question-fill"></use>
-        </svg>
-        Movies
-      </a>
-    </li>
+
   </ul>
   <hr>
   <div class="dropdown">
