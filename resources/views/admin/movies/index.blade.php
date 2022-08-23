@@ -19,7 +19,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($movies as $movie)
+                @foreach ($movies ?? '' as $movie)
                     <tr>
                         <td>{{ $movie->id }}</td>
                         <td><img src="{{ $movie->poster_img }}" alt="" class="img-thumbnail" style="height: 80px"></td>
@@ -38,6 +38,16 @@
                                 </svg>
                             </a>
 
+                            <form action="{{ route('admin.movies.destroy', $movie->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit" class="btn btn-danger">
+                                    <svg class="bi" width="16" height="16">
+                                        <use xlink:href="/bootstrap-icons.svg#trash"></use>
+                                    </svg>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach
