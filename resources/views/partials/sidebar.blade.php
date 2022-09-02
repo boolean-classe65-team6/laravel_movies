@@ -11,7 +11,7 @@
   <ul class="nav nav-pills flex-column mb-auto">
     <li class="nav-item">
       <a href="{{ route('admin.home') }}"
-        class="nav-link {{ Request::route()->getName() === 'admin.home' ? 'active' : '' }}" aria-current="page">
+        class="nav-link {{ Request::route()->getName() === 'admin/home' ? 'active' : '' }}" aria-current="page">
         <svg class="bi pe-none me-2 text-light" width="16" height="16">
           <use xlink:href="/bootstrap-icons.svg#house-fill"></use>
         </svg>
@@ -37,24 +37,16 @@
         Movies
       </a>
     </li>
-    <li class="nav-item">
-      <a href="{{ route('admin.movies.index') }}"
-        class="nav-link {{ Request::route()->getName() === 'admin.movies.index' ? 'active' : '' }}"
-        aria-current="page">
-        <svg class="bi pe-none me-2 text-light" width="16" height="16">
-          <use xlink:href="/bootstrap-icons.svg#patch-question-fill"></use>
-        </svg>
-        Movies
-      </a>
-    </li>
+
   </ul>
   <hr>
   <div class="dropdown">
-    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+    @auth<a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
       data-bs-toggle="dropdown" aria-expanded="false">
       <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
       <strong>{{ Auth::user()->name }}</strong>
     </a>
+    @endauth
     <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
       <li><a class="dropdown-item" href="#">New project...</a></li>
       <li><a class="dropdown-item" href="#">Settings</a></li>

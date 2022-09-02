@@ -1,12 +1,27 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreMovieRequest;
+use App\Http\Requests\UpdateMovieRequest;
 use App\Movie;
-use Illuminate\Http\Request;
+use App\Traits\MovieRating;
 
 class MovieController extends Controller
 {
+    use MovieRating;
+
+    public static $movieValidationRules = [
+        "title" => "required",
+        "overview" => "required",
+        "release_date" => "nullable|date",
+        "poster_img" => "required",
+        "running_time" => "nullable|integer|min:10",
+        "parental_rating" => "nullable",
+        "original_language" => "nullable|size:2",
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +29,14 @@ class MovieController extends Controller
      */
     public function index()
     {
-        //
+        // recuperiamo tutti i dati senza poter indicare l'ordine
+        // Di default l'ordine è per id
+        // $movies = Movie::all();
+
+        // Recuperiamo tutti i dati in un ordine desiderato
+        $movies = Movie::orderBy("title", "asc")->get();
+
+        return view("admin.movies.index", compact("movies"));
     }
 
     /**
@@ -24,7 +46,9 @@ class MovieController extends Controller
      */
     public function create()
     {
-        //
+        return view("admin.movies.create", [
+            "movieRatings" => $this->movieRatings
+        ]);
     }
 
     /**
@@ -33,9 +57,15 @@ class MovieController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreMovieRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $movie = new Movie();
+        $movie->fill($data);
+        $movie->save();
+
+        return redirect()->route("admin.movies.show", $movie->id);
     }
 
     /**
@@ -46,7 +76,13 @@ class MovieController extends Controller
      */
     public function show(Movie $movie)
     {
-        //
+        // operazione eseguita dal findOrFail e anche dalla Dependecy Injection
+        /* $movie = Movie::find($id);
+        if (!$movie) {
+            abort(404);
+        } */
+
+        return view("admin.movies.show", compact("movie"));
     }
 
     /**
@@ -57,7 +93,13 @@ class MovieController extends Controller
      */
     public function edit(Movie $movie)
     {
-        //
+        return view(
+            "admin.movies.edit",
+            [
+                "movieRatings" => $this->movieRatings,
+                "movie" => $movie
+            ]
+        );
     }
 
     /**
@@ -67,9 +109,13 @@ class MovieController extends Controller
      * @param  \App\Movie  $movie
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Movie $movie)
+    public function update(UpdateMovieRequest $request, Movie $movie)
     {
-        //
+        $data = $request->validated();
+
+        $movie->update($data);
+
+        return redirect()->route("admin.movies.show", $movie->id);
     }
 
     /**
