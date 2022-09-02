@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MovieController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,7 +26,6 @@ Route::middleware("auth")
         Route::resource('/movies', 'MovieController');
 
         Route::get('/home', 'HomeController@index')->name('home');
-
     });
 
 
