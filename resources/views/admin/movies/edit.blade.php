@@ -95,15 +95,18 @@
       </div>
 
       <div class="col">
-        <div class="input-group">
+        <div class="input-group mb-3">
+          @foreach ($actors as $actor)
           <div class="input-group-text">
-            @foreach ($actors as $actor)
-              <input class="form-check-input mt-0" type="radio" value="{{ actor->name }}" aria-label="Radio button for following text input">
-            @endforeach
+            
+            <input id="actor_check" class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input">
+            <label for="actor_check">{{ $actor->name }}</label>
           </div>
-          <input type="text" class="form-control" aria-label="Text input with radio button">
+          
+          @endforeach
         </div>
       </div>
+      
 
       <button type="submit" class="btn btn-success">Salva</button>
       <a href="{{ route('admin.movies.index') }}" class="btn btn-secondary">Annulla</a>
