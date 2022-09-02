@@ -94,6 +94,17 @@
         </div>
       </div>
 
+      <div class="col">
+        <div class="input-group">
+          <div class="input-group-text">
+            @foreach ($actors as $actor)
+              <input class="form-check-input mt-0" type="radio" value="{{ actor->name }}" aria-label="Radio button for following text input">
+            @endforeach
+          </div>
+          <input type="text" class="form-control" aria-label="Text input with radio button">
+        </div>
+      </div>
+
       <button type="submit" class="btn btn-success">Salva</button>
       <a href="{{ route('admin.movies.index') }}" class="btn btn-secondary">Annulla</a>
 

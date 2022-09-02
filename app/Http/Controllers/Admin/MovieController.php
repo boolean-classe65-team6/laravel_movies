@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMovieRequest;
 use App\Http\Requests\UpdateMovieRequest;
 use App\Movie;
+use App\Actor;
 use App\Traits\MovieRating;
 
 class MovieController extends Controller
@@ -93,11 +94,14 @@ class MovieController extends Controller
      */
     public function edit(Movie $movie)
     {
+        $actors = Actor::all();
+
         return view(
             "admin.movies.edit",
             [
                 "movieRatings" => $this->movieRatings,
-                "movie" => $movie
+                "movie" => $movie,
+                "actors" => $actors
             ]
         );
     }
